@@ -1,0 +1,52 @@
+import java.util.* ;
+import java.io.*; 
+
+public class Stack {
+    List<Integer> st;
+    int n;
+    int stacksize;
+    Stack(int n){
+         st = new ArrayList<>(n);
+        for(int i = 0;i < n; i ++)
+            st.add(0);
+        this.n = n;
+        stacksize = -1;
+    }
+    void push(int num) {
+        // Write your code here.
+        if(stacksize != n - 1){
+            stacksize ++;
+            st.set(stacksize,num);
+        }
+    }
+    int pop() {
+        // Write your code here.
+        if(stacksize != -1){
+            int x = st.get(stacksize);
+            stacksize --;
+            return x;
+        }
+        else
+            return -1;
+    }
+    int top() {
+        // Write your code here.
+        if(stacksize != -1){
+            return st.get(stacksize);
+        }
+        else    return -1;
+    }
+    int isEmpty() {
+        // Write your code here.
+        if(stacksize == -1)
+            return 1;
+        else return 0;
+    }
+    int isFull() {
+        // Write your code here.
+        if(stacksize == n - 1)
+            return 1;
+        else
+            return 0;
+    }
+}
