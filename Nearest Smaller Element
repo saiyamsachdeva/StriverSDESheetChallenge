@@ -1,0 +1,25 @@
+public class Solution {
+    public int[] prevSmaller(int[] a) {
+        Stack<Integer> s = new Stack<>();
+        int[] ans = new int[a.length];
+        for(int i = 0;i < a.length; i ++) {
+            if(s.isEmpty())
+            {
+                ans[i] = -1;
+                s.push(a[i]);
+            }
+            else{
+                while(!s.isEmpty() && s.peek() >= a[i])
+                    s.pop();
+                if(!s.isEmpty()) {
+                    ans[i] = s.peek();
+                    s.push(a[i]);
+                }
+                else
+                    ans[i] = -1;
+                    s.push(a[i]);
+            }
+        }
+        return ans;
+    }
+}
