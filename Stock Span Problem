@@ -1,0 +1,38 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+import java.util.Stack;
+
+public class Solution {
+    static class Pair {
+        int val;
+        int fq;
+        Pair(int val, int fq) {
+            this.val = val;
+            this.fq = fq;
+        }
+    }
+    public static ArrayList<Integer> findSpans(ArrayList<Integer> price) {
+        // Write your code here.
+        ArrayList<Integer> ans = new ArrayList<>();
+        Stack<Pair> s = new Stack<>();
+        for(int i = 0;i < price.size(); i ++) {
+            int x = price.get(i);
+            if(s.isEmpty() || s.peek().val > x)
+            {
+                s.push(new Pair(x,1));
+                ans.add(1);
+            }
+            else {
+                int ct = 1;
+                while(!s.isEmpty() && s.peek().val <= x) {
+                    Pair u = s.pop();
+                    ct += u.fq;
+                }
+                s.push(new Pair(x, ct));
+                ans.add(ct);
+            }
+        }
+        return ans;
+    }
+}
