@@ -1,0 +1,49 @@
+import java.util.*;
+public class Solution {
+
+	static class Pair {
+            int r;
+            int c;
+            Pair(int r, int c) {
+                this.r = r;
+                this.c = c;
+            }
+        }
+	public static int minTimeToRot(int[][] grid, int n, int m) {
+		// Write your code here.
+		Queue<Pair> q = new LinkedList<>();
+        int ct = 0;
+        for(int i = 0;i < n; i ++) {
+            for(int j = 0; j < m ; j ++) {
+                if(grid[i][j] == 1)  ct ++;
+                if(grid[i][j] == 2)
+                    q.add(new Pair(i,j));
+            }
+        }
+        int time = 0;
+        int nct = 0;
+        int[] dr = {1,-1,0,0};
+        int[] dc = {0,0,1,-1};
+        while(!q.isEmpty()) {
+            int size = q.size();
+            for(int j = 0; j < size; j ++) {
+                Pair x = q.poll();
+                int row = x.r;
+                int col = x.c;
+                for(int i = 0; i < 4; i ++) {
+                    int nr = row + dr[i];
+                    int nc = col + dc[i];
+                    if(nr >= 0 && nr < n && nc >= 0 && nc < m && grid[nr][nc] == 1){
+                        nct += 1;
+                        grid[nr][nc] = 2;
+                        q.add(new Pair(nr,nc));
+                    }
+                }
+            }
+            if(!q.isEmpty())   time += 1; 
+        }
+        if(nct == ct)   return time;
+        return -1;
+	}
+
+}
