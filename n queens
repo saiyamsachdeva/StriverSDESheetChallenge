@@ -1,0 +1,50 @@
+class Solution {
+    public static List<String> construct(char[][] board)
+    {
+        List<String> ans = new LinkedList<>();
+        for(int i = 0; i < board.length; i ++)
+        {
+            String s = new String(board[i]);
+            ans.add(s);
+        }
+        return ans;
+    }
+    public List<List<String>> solveNQueens(int n) {
+        char[][] b= new char[n][n];
+        for(int i = 0;i < n; i ++) {
+            for(int j = 0;j < n; j ++) {
+                b[i][j] = '.';
+            }
+        }
+        boolean[] l = new boolean[n];
+        boolean[] ld = new boolean[2 * n - 1];
+        boolean[] rd = new boolean[2 * n - 1];
+        List<List<String>> ans = new ArrayList<>();
+        solve(0,n,b,ans,l,ld,rd);
+        return ans;
+    }
+    public static void solve(int col, int n, char[][] b, List<List<String>> ans, boolean[] l,boolean[] ld,boolean[] rd) {
+        if(col == n) {
+            ans.add(construct(b));
+            return;
+        }
+        for(int i = 0; i < n; i ++) {
+            if(b[i][col] == '.') {
+                if(!l[i] && 
+                !ld[n - 1 + (col - i)] && 
+                !rd[i + col]){
+                    b[i][col] = 'Q';
+                    l[i] = true;
+                    ld[n-1 + (col - i)] = true;
+                    rd[i + col] = true;
+                    solve(col + 1, n,b,ans,l,ld,rd);
+                    l[i] = false;
+                    b[i][col] = '.';
+                    ld[n-1 + (col - i)] = false;
+                    rd[i + col] = false;
+                }
+            }
+        }
+
+    }
+}
