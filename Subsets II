@@ -1,0 +1,27 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    public static ArrayList<ArrayList<Integer>> uniqueSubsets(int n, int arr[]) {
+        // Write your code here..
+        Arrays.sort(arr);
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+        ArrayList<Integer> ds = new ArrayList<>();
+        helper(0,arr, n, ans, ds);
+        return ans;
+    }
+    public static void helper(int idx, int[] a, int n, ArrayList<ArrayList<Integer>> ans, ArrayList<Integer> ds) {
+        if(idx > n) {
+            ans.add(new ArrayList<>(ds));
+            return;
+        }
+        if(idx > 0) ans.add(new ArrayList<>(ds));
+        for(int i = idx; i < n; i ++) {
+            if(i > idx && a[i] == a[i - 1])
+                continue;
+            ds.add(a[i]);
+            helper(i + 1,a,n,ans,ds);
+            ds.remove(ds.size() - 1);
+        }
+    }
+
+}
