@@ -1,0 +1,20 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    public static ArrayList<Integer> subsetSum(int a[]) {
+        // Write your code here..
+        int n = a.length;
+        ArrayList<Integer> ans = new ArrayList<>();
+        helper(0,a,ans,n, 0);
+        Collections.sort(ans);
+        return ans;
+    }
+    public static void helper(int idx, int[] a, ArrayList<Integer> ans, int n, int sum) {
+        if(idx == n){
+            ans.add(sum);
+            return;
+        }
+        helper(idx + 1, a, ans, n, sum + a[idx]);
+        helper(idx + 1, a, ans, n, sum);
+    }
+}
