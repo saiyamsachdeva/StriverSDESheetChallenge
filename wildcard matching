@@ -1,0 +1,63 @@
+class Solution {
+
+
+
+		public static int f(int i, int j,String s, String t,int[][] dp) {
+			if(i <0 && j < 0)	return 1;
+			if(i < 0 && j >= 0)	return 0;
+			if(j < 0 && i >= 0){
+				return isAllStars(s, i) ? 1 : 0;
+			}
+			
+			if (dp[i][j] != -1) return dp[i][j];
+
+			if(s.charAt(i) == t.charAt(j) || s.charAt(i) == '?') {
+				return dp[i][j] = f(i-1,j-1,s,t,dp);
+			}
+			else {
+				if(s.charAt(i) == '*') {
+					return dp[i][j] = (f(i,j-1,s,t,dp) == 1 || f(i-1,j,s,t,dp) == 1) ? 1 : 0;
+				}
+			}
+			return 0;
+		}
+
+
+
+		public static boolean isAllStars(String S1, int i) {
+			for (int j = 1; j <= i; j++) {
+				if (S1.charAt(j - 1) != '*')
+					return false;
+			}
+			return true;
+  	}
+
+
+
+    public boolean isMatch(String t, String s) {
+        int n = s.length();
+				int m = t.length();
+				boolean[] dp = new boolean[m+1];
+				dp[0] = true;
+				for(int j = 1; j <= m; j ++) 
+					dp[j] = false;
+				
+				for(int i = 1; i <= n; i ++) {
+					boolean[] c = new boolean[m+1];
+					c[0] = isAllStars(s,i);
+					for(int j = 1; j <= m; j ++) {
+						if(s.charAt(i-1) == t.charAt(j-1) || s.charAt(i-1) == '?') {
+							 c[j] = dp[j-1];
+						}
+						else if(s.charAt(i-1) == '*'){
+							c[j] = (c[j-1] || dp[j]) ;
+						}
+						else
+							c[j] = false;
+					}
+					dp = c;
+				}
+				return dp[m];
+    }
+
+}
